@@ -5,7 +5,7 @@ using Store.Models;
 using Microsoft.EntityFrameworkCore;
 
 [Controller]
-public class BaseController : Controller
+public abstract class BaseController : Controller
 {
     // returns the current authenticated account (null if not logged in)
     public StoreContext dbContext = new StoreContext();

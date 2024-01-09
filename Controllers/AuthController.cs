@@ -4,7 +4,6 @@ namespace Store.Controllers;
 public class AuthController : BaseController
 {
     [HttpGet]
-    [HttpGet]
     public IActionResult Login()
     {
         return View();
@@ -13,6 +12,7 @@ public class AuthController : BaseController
     [HttpPost]
     public async Task<IActionResult> Login(string username, string password, string returnUrl)
     {
+        Console.WriteLine(username);
         return View();
     }
 }

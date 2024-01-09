@@ -1,0 +1,2 @@
+INSERT INTO `users` VALUES (1,1,N'hoaian_admin',N'Hoài Ân','Lê','2003-02-22','male',N'Hòa Trị, Phú Hòa, Phú Yên',NULL,NULL,'$2b$10$V11jxXDnQf2Xryyu2jP.6./6v0JRMA5DOCmTTuYd6FgsxJ1R6kxzm');
+INSERT INTO `users` VALUES (2,2,N'dunggsx',N'dung','danghung','2003-02-22','male',N'Hòa Trị, Phú Hòa, Phú Yên',NULL,NULL,'$2b$10$V11jxXDnQf2Xryyu2jP.6./6v0JRMA5DOCmTTuYd6FgsxJ1R6kxzm');
