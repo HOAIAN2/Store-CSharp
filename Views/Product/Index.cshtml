@@ -1,0 +1,108 @@
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    ViewData["Title"] = "Home Page";
+}
+<!-- FB's customer Support Area End Here -->
+<!-- Begin FB's Product With Banner Area -->
+@* @Html.Partial("HotDeal", ViewData["hotProducts"]) *@
+@await Html.PartialAsync("HotDeal", ViewData["hotProducts"])
+<!-- FB's Product Area End Here -->
+<!-- Begin FB's Banner Wrap Area -->
+<div class="fb-banner_wrap">
+    <div class="container">
+        <div class="row">
+            <!-- Begin FB's Banner Area -->
+            <div class="col-lg-6">
+                <div class="fb-banner fb-img-hover-effect pb-sm-30 pb-xs-30">
+                    <a href="#">
+                        <img src="~/assets/images/banner/1_4.jpg" alt="FB'S Banner">
+                    </a>
+                </div>
+            </div>
+            <!-- FB's Banner Area End Here -->
+            <!-- Begin FB's Banner Area -->
+            <div class="col-lg-6">
+                <div class="fb-banner fb-img-hover-effect">
+                    <a href="#">
+                        <img src="~/assets/images/banner/1_5.jpg" alt="FB'S Banner">
+                    </a>
+                </div>
+            </div>
+            <!-- FB's Banner Area End Here -->
+        </div>
+    </div>
+</div>
+<!-- FB's Banner Wrap Area End Here -->
+<!-- Begin FB's Banner With List Product Area -->
+@* @await Html.PartialAsync("Cookware", ViewData["cookWare"]) *@
+@* @Html.Partial("Cookware", ViewData["cookWare"]) *@
+<!-- FB's Banner With List Product Area End Here -->
+<!-- Begin FB's Banner With List Product Area -->
+<!-- FB's Banner With List Product Area End Here -->
+<!-- Begin FB's Banner With New Product Area -->
+<div class="fb-banner_with-new_product pb-60">
+    <div class="container">
+        <div class="row">
+            @await Html.PartialAsync("NewProducts", ViewData["newProducts"])
+            @* @Html.Partial("NewProducts", ViewData["newProducts"]) *@
+            @await Html.PartialAsync("FeaturedProducts", ViewData["featuredProducts"])
+            @* @Html.Partial("FeaturedProducts", ViewData["featuredProducts"]) *@
+        </div>
+    </div>
+</div>
+<!-- FB's Banner With New Product Area End Here -->
+<!-- Begin FB's Branding Area -->
+<div class="fb-branding-wrap pb-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="fb-branding bg-white">
+                    <div class="fb-branding_active owl-carousel">
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="~/assets/images/branding/1.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="~/assets/images/branding/2.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="~/assets/images/branding/3.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="~/assets/images/branding/4.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="~/assets/images/branding/5.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="~/assets/images/branding/6.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="~/assets/images/branding/1.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="~/assets/images/branding/2.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- FB's Branding Area End Here -->
+<!-- Begin FB's Footer Area -->

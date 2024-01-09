@@ -1,0 +1,40 @@
+@{
+    var products = Model as List<Product>;
+}
+
+<div class="fb-product_with_banner pb-60">
+    <div class="container">
+        <div class="fb-section_title">
+            <h2>Hot Deals</h2>
+        </div>
+        <div class="row no-gutters">
+            <!-- Begin FB's Banner Area -->
+            <div class="col-xl-3 col-lg-4 col-md-5">
+                <div class="fb-banner fb-img-hover-effect">
+                    <a href="#">
+                        <img src="~/assets/images/banner/1_3.jpg" alt="FB'S Banner">
+                    </a>
+                </div>
+            </div>
+            <!-- FB's Banner Area End Here -->
+            <!-- Begin FB's Product Wrap Area -->
+            <div class="col-xl-9 col-lg-8 col-md-7">
+                <div class="fb-product_wrap bg-white">
+                    <div class="fb-product_active owl-carousel">
+                        @if (products != null)
+                            @foreach (var product in products)
+                            {
+                                @await Html.PartialAsync("SingleProduct", product)
+                                @* @Html.Partial("SingleProduct", product) *@
+                            }
+                        <!-- Begin Sigle Product Area -->
+                        <!-- Sigle Product Area End Here -->
+                        <!-- Begin Sigle Product Area -->
+                        <!-- Sigle Product Area End Here -->
+                    </div>
+                </div>
+            </div>
+            <!-- FB's Product Wrap Area End Here -->
+        </div>
+    </div>
+</div>

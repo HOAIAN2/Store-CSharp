@@ -1,0 +1,20 @@
+INSERT INTO categories (category_name, description) VALUES(N'Ưu Đãi Hội Viên', N'');
+INSERT INTO categories (category_name, description) VALUES(N'Sản Phẩm Khuyến Mãi', N'<p>Sản Phẩm Khuyến Mại</p>');
+INSERT INTO categories (category_name, description) VALUES(N'Thịt - Hải Sản Tươi', N'<p>Thịt - Trứng - Hải Sản</p>');
+INSERT INTO categories (category_name, description) VALUES(N'Rau - Củ - Trái Cây', N'<p>Rau - Củ - Trái Cây</p>');
+INSERT INTO categories (category_name, description) VALUES(N'Hóa Phẩm - Tẩy rửa', N'<p>Hóa Phẩm - Tẩy rửa</p>');
+INSERT INTO categories (category_name, description) VALUES(N'Chăm Sóc Cá Nhân', N'<p>Chăm Sóc Cá Nhân</p>');
+INSERT INTO categories (category_name, description) VALUES(N'Sữa các loại', N'<p>Sữa - Sản Phẩm Từ Sữa</p>');
+INSERT INTO categories (category_name, description) VALUES(N'Bánh Kẹo', N'<p>Bánh Kẹo</p>');
+INSERT INTO categories (category_name, description) VALUES(N'Đồ uống có cồn', N'');
+INSERT INTO categories (category_name, description) VALUES(N'Đồ Uống - Giải Khát', N'<p>Đồ Uống - Giải Khát</p>');
+INSERT INTO categories (category_name, description) VALUES(N'Mì - Thực Phẩm Ăn Liền', N'<p>Mì - Thực Phẩm Ăn Liền</p>');
+INSERT INTO categories (category_name, description) VALUES(N'Thực Phẩm Khô', N'<p><br></p><p>Thực Phẩm Khô</p>');
+INSERT INTO categories (category_name, description) VALUES(N'Thực Phẩm Chế Biến', N'<p>Thực Phẩm Chế Biến</p>');
+INSERT INTO categories (category_name, description) VALUES(N'Gia vị', N'');
+INSERT INTO categories (category_name, description) VALUES(N'Thực Phẩm Đông Lạnh', N'<p>Thực Phẩm Đông Lạnh</p>');
+INSERT INTO categories (category_name, description) VALUES(N'Trứng - Đậu Hũ', N'<p>Trứng - Đậu Hũ</p>');
+INSERT INTO categories (category_name, description) VALUES(N'Chăm Sóc Bé', N'<p>Chăm Sóc Bé</p>');
+INSERT INTO categories (category_name, description) VALUES(N'Đồ Dùng Gia Đình', N'<p>Đồ Dùng Gia Đình</p>');
+INSERT INTO categories (category_name, description) VALUES(N'Điện Gia Dụng', N'<p>Điện Gia Dụng</p>');
+INSERT INTO categories (category_name, description) VALUES(N'Văn Phòng Phẩm - Đồ Chơi', N'<p>Văn phòng phẩm</p>')

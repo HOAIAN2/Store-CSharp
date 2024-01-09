@@ -1,0 +1,51 @@
+@{
+    var product = Model as Product;
+}
+@if (product != null)
+{
+    <div class="single-product">
+        <!-- Begin Product Image Area -->
+        <div class="product-img">
+            <a href="@Url.Action("ProductDetail","Product", new { id = @product.Id })">
+                <img class="primary-img" src="~/assets/images/product/@product.Images" alt="FB'S Prduct">
+            </a>
+            <div class="sticker"><span>New</span></div>
+            <div class="sticker-2"><span>-10%</span></div>
+            <div class="countersection">
+                <div class="fb-countdown"></div>
+            </div>
+        </div>
+        <!-- Product Image Area End Here -->
+        <!-- Begin Product Content Area -->
+        <div class="product-content">
+            <h2 class="product-name">
+                @* <a href="productdetail/">Printed Dress</a> *@
+                @Html.ActionLink(@product.ProductName, "ProductDetail", "Product", new { id = @product.Id })
+            </h2>
+            <div class="rating-box">
+                <ul class="rating">
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                    <li class="no-star"><i class="fa fa-star"></i></li>
+                    <li class="no-star"><i class="fa fa-star"></i></li>
+                </ul>
+            </div>
+            <div class="price-box">
+                <span class="new-price">@string.Format("{0:#,##0}", product.Price) VNĐ</span>
+                <span class="old-price">@string.Format("{0:#,##0}", product.Price) VNĐ</span>
+            </div>
+            <div class="product-action">
+                <ul class="product-action-link">
+                    <li class="shopping-cart_link"><a href="shopping-cart.html" title="Shopping Cart"><i
+                                class="ion-bag"></i></a></li>
+                    <li class="quick-view-btn"><a href="#" title="Quick View" data-bs-toggle="modal"
+                            data-bs-target="#exampleModalCenter"><i class="ion-eye"></i></a></li>
+                    <li class="single-product_link"><a href="product-details.html" title="Single Product"><i
+                                class="ion-link"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- Product Content Area End Here -->
+    </div>
+}

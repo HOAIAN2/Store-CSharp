@@ -1,0 +1,59 @@
+@{
+    var products = Model as List<Product>;
+}
+
+<div class="fb-banner_with_list-product cookware-product pt-60 pb-60">
+    <div class="container">
+        <div class="fb-product_list_nav">
+            <div class="row no-gutters">
+                <div class="col-xl-3 col-lg-4 col-md-5">
+                    <div class="fb-section_title-2">
+                        <h2>Cookware</h2>
+                    </div>
+                    <!-- Begin FB's Banner Area -->
+                    <div class="fb-banner fb-img-hover-effect">
+                        <a href="#">
+                            <img src="~/assets/images/banner/1_6.jpg" alt="FB'S Banner">
+                        </a>
+                    </div>
+                    <!-- FB's Banner Area End Here -->
+                </div>
+                <div class="col-xl-9 col-lg-8 col-md-7">
+                    <div class="btn-group">
+                        <button class="subcategories-trigger"><i class="fa fa-bars"></i></button>
+                        <ul class="subcategories-list">
+                            <li><a href="shop-left-sidebar.html" target="_blank">Cookware Brands</a></li>
+                            <li><a href="shop-left-sidebar.html" target="_blank">Cookware Sets</a></li>
+                            <li><a href="shop-left-sidebar.html" target="_blank">Individual Cookware</a></li>
+                            <li><a href="shop-left-sidebar.html" target="_blank">Enamel Cookware</a></li>
+                        </ul>
+                        <!-- Begin FB's List Product Menu Area -->
+                        <ul class="list-product_menu">
+                            <li><a href="shop-left-sidebar.html" target="_blank">Cookware Brands</a></li>
+                            <li><a href="shop-left-sidebar.html" target="_blank">Cookware Sets</a></li>
+                            <li><a href="shop-left-sidebar.html" target="_blank">Individual Cookware</a></li>
+                            <li><a href="shop-left-sidebar.html" target="_blank">Enamel Cookware</a></li>
+                        </ul>
+                        <!-- FB's List Product Menu Area End Here -->
+                    </div>
+                    <!-- Begin FB's List Product Area -->
+                    <div class="fb-list_product">
+                        <div class="fb-list_product_active owl-carousel">
+                            <div class="row no-gutters">
+                                <!-- Begin Sigle Product Area -->
+                                <!-- Sigle Product Area End Here -->
+                                @if (products != null)
+                                    @foreach (var product in products)
+                                    {
+                                        @await Html.PartialAsync("SingleProduct", product)
+                                        @* @Html.Partial("SingleProduct", product) *@
+                                    }
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FB's List Product Area End Here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
