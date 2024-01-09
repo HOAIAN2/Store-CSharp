@@ -21,7 +21,7 @@ CREATE TABLE users (
     first_name NVARCHAR(255) NOT NULL,
     last_name NVARCHAR(255) NOT NULL,
     birth_date DATETIME NOT NULL,
-    gender NVARCHAR(1) NOT NULL CHECK (gender IN('male', 'female')),
+    gender NVARCHAR(255) NOT NULL CHECK (gender IN('male', 'female')),
     address NVARCHAR(255) NOT NULL,
     email NVARCHAR(255),
     phone_number CHAR(10),
