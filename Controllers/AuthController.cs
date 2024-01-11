@@ -15,11 +15,13 @@ public class AuthController : BaseController
     [HttpGet]
     public IActionResult Login()
     {
+        var userJson = HttpContext.Session.GetString("user");
+        if (userJson != null) return Redirect("/");
         return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> Login(string username, string password)
+    public async Task<IActionResult> Login(string username, string password, string redirect)
     {
         var user = await dbContext.Users.FirstOrDefaultAsync(user => user.Username == username);
 
@@ -30,11 +32,9 @@ public class AuthController : BaseController
             {
                 var jsonStr = JsonSerializer.Serialize(user);
                 HttpContext.Session.SetString("user", jsonStr);
-
-                return Redirect("/");
+                return Redirect(redirect);
             }
         }
-
 
         return View();
     }
