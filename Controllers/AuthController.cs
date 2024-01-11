@@ -34,8 +34,9 @@ public class AuthController : BaseController
                 HttpContext.Session.SetString("user", jsonStr);
                 return Redirect(redirect);
             }
+            else ViewData["error"] = "Mật khẩu không chính xác";
         }
-
+        else ViewData["error"] = $"Không tìm thấy tài khoản {username}";
         return View();
     }
 
