@@ -1,58 +1,87 @@
 @{
     Layout = "~/Views/Shared/_UserLayout.cshtml";
     ViewData["Title"] = "Home Page";
+    var error = ViewData["error"] as string;
+    var user = ViewData["user"] as User;
 }
 
+@{
+    if (error != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @error
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+}
 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-sm-12 col-md-12 col-lg-9 col-xs-12">
             <form action="/Auth/Register" method="post">
                 <div class="login-form">
-                    <h4 class="login-title">Register</h4>
+                    <h4 class="login-title">Đăng ký</h4>
                     <div class="row">
                         <div class="col-md-6 col-12 mb-20">
-                            <label>First Name</label>
-                            <input name="first_name" class="mb-0" type="text" placeholder="First Name">
+                            <label>Tên</label>
+                            <input value="@user?.FirstName" name="FirstName" class="mb-0" type="text" placeholder="Tên">
                         </div>
                         <div class="col-md-6 col-12 mb-20">
-                            <label>Last Name</label>
-                            <input name="last_name" class="mb-0" type="text" placeholder="Last Name">
+                            <label>Họ</label>
+                            <input value="@user?.LastName" name="LastName" class="mb-0" type="text" placeholder="Họ">
                         </div>
                         <div class="col-md-6 col-12 mb-20">
-                            <label>User Name</label>
-                            <input name="username" class="mb-0" type="text" placeholder="First Name">
+                            <label>Tên đăng nhập</label>
+                            <input value="@user?.Username" name="Username" class="mb-0" type="text"
+                                placeholder="Tên đăng nhập">
                         </div>
                         <div class="col-md-6 col-12 mb-20">
-                            <label>Birth Day</label>
-                            <input name="birth" class="mb-0" type="text" placeholder="First Name">
+                            <label>Ngày sinh</label>
+                            <input value="@user?.BirthDate.ToString("yyyy-MM-dd")" name="BirthDate" class="mb-0"
+                                type="date" placeholder="Ngày sinh">
                         </div>
                         <div class="col-md-6 col-12 mb-20">
                             <label>Gender</label>
-                            <input name="gender" class="mb-0" type="text" placeholder="First Name">
+                            <select class="form-select mb-0" name="Gender">
+                                @{
+                                    if (user?.Gender == "female")
+                                    {
+                                        <option value="male">Nam</option>
+                                        <option selected value="female">Nữ</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="male">Nam</option>
+                                        <option value="female">Nữ</option>
+                                    }
+                                }
+                            </select>
                         </div>
                         <div class="col-md-6 col-12 mb-20">
-                            <label>Phone Number</label>
-                            <input name="phoneNumber" class="mb-0" type="text" placeholder="First Name">
+                            <label>Số điện thoại</label>
+                            <input value="@user?.PhoneNumber" name="PhoneNumber" class="mb-0" type="text"
+                                placeholder="Số điện thoại">
                         </div>
                         <div class="col-md-12 mb-20">
-                            <label>Email Address*</label>
-                            <input name="email" class="mb-0" type="email" placeholder="Email Address">
+                            <label>Email *</label>
+                            <input value="@user?.Email" name="Email" class="mb-0" type="email" placeholder="Email">
                         </div>
                         <div class="col-md-12 mb-20">
-                            <label>Address*</label>
-                            <input name="address" class="mb-0" type="email" placeholder="Email Address">
+                            <label>Địa chỉ *</label>
+                            <input value="@user?.Address" name="Address" class="mb-0" type="text" placeholder="Địa chỉ">
                         </div>
                         <div class="col-md-6 mb-20">
-                            <label>Password</label>
-                            <input name="password" class="mb-0" type="password" placeholder="Password">
+                            <label>Mật khẩu</label>
+                            <input name="Password" class="mb-0" type="password" placeholder="Mật khẩu">
                         </div>
                         <div class="col-md-6 mb-20">
-                            <label>Confirm Password</label>
-                            <input class="mb-0" type="password" placeholder="Confirm Password">
+                            <label>Xác nhận mật khẩu</label>
+                            <input name="ConfirmPassword" class="mb-0" type="password" placeholder="Xác nhận mật khẩu">
                         </div>
                         <div class="col-12">
-                            <button class="register-button mt-0">Register</button>
+                            <button class="register-button mt-0">Đăng ký</button>
                         </div>
                     </div>
                 </div>
@@ -60,3 +89,9 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('.close').on('click', function () {
+        $('.alert').alert('close')
+    })
+</script>

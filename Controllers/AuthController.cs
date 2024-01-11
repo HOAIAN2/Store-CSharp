@@ -50,40 +50,40 @@ public class AuthController : BaseController
 
 
     [HttpPost]
-    public async Task<IActionResult> Register(string first_name, string last_name, string username, string password, DateTime birth, string gender, string address, string email, string phoneNumber)
+    public async Task<IActionResult> Register(User user)
     {
-        //chưa test
-        var user = await dbContext.Users.FirstOrDefaultAsync(user => user.Username == username);
-        if (user != null)
+        ModelState.Remove("Role");
+        ViewData["user"] = user;
+        if (ModelState.IsValid)
         {
-            return View();
-        }
-        else
-        {
-            var hashedPassword = BC.HashPassword(password);
-            var newUser = new User
+            var temp = await dbContext.Users.FirstOrDefaultAsync(u => u.Username == user.Username);
+            if (temp != null)
             {
-                RoleId = 2,
-                Username = username,
-                FirstName = first_name,
-                LastName = last_name,
-                BirthDate = birth,
-                Gender = gender,
-                Address = address,
-                Email = email,
-                PhoneNumber = phoneNumber,
-                Password = hashedPassword
-            };
-            var create = dbContext.Users.Add(newUser);
-            if (create != null)
-            {
-                return Redirect("/");
-            }
-            else
-            {
+                ViewData["error"] = $"Tài khoản {user.Username} đã tồn tại";
                 return View();
             }
+            if (user.Email != null) temp = await dbContext.Users.FirstAsync(u => u.Email == user.Email);
+            if (temp != null)
+            {
+                ViewData["error"] = "Email đã tồn tại";
+                return View();
+            }
+            if (user.PhoneNumber != null) temp = await dbContext.Users.FirstAsync(u => u.PhoneNumber == user.PhoneNumber);
+            if (temp != null)
+            {
+                ViewData["error"] = "Số điện thoại đã tồn tại";
+                return View();
+            }
+
+            // Save
+            user.RoleId = 2;
+            user.Password = BC.HashPassword(user.Password);
+            dbContext.Users.Add(user);
+            await dbContext.SaveChangesAsync();
+            return RedirectToAction("Login", "Auth");
         }
+        ViewData["error"] = "Dữ liệu không hợp lệ";
+        return View();
     }
     public IActionResult Logout(string redirect)
     {

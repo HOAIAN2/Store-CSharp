@@ -17,7 +17,7 @@ GO
 CREATE TABLE users (
     id INT PRIMARY KEY IDENTITY(1,1),
     role_id INT NOT NULL,
-    username NVARCHAR(255) NOT NULL,
+    username NVARCHAR(255) NOT NULL UNIQUE,
     first_name NVARCHAR(255) NOT NULL,
     last_name NVARCHAR(255) NOT NULL,
     birth_date DATETIME NOT NULL,
@@ -26,13 +26,18 @@ CREATE TABLE users (
     email NVARCHAR(255),
     phone_number CHAR(10),
     password NVARCHAR(60),
-    CONSTRAINT UQ_username UNIQUE (username),
-    CONSTRAINT UQ_email UNIQUE (email),
-    CONSTRAINT UQ_phone_number UNIQUE (phone_number),
     FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 GO
-
+--
+CREATE UNIQUE INDEX UQ_phone_number
+ON users (phone_number)
+WHERE phone_number IS NOT NULL;
+--
+CREATE UNIQUE INDEX UQ_email
+ON users (email)
+WHERE email IS NOT NULL;
+--
 -- Create suppliers table
 CREATE TABLE suppliers (
     id INT PRIMARY KEY IDENTITY(1,1),
