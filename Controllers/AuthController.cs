@@ -43,6 +43,8 @@ public class AuthController : BaseController
     [HttpGet]
     public IActionResult Register()
     {
+        var userJson = HttpContext.Session.GetString("user");
+        if (userJson != null) return Redirect("/");
         return View();
     }
 
