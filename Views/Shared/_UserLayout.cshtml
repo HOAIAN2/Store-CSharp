@@ -1,6 +1,10 @@
-
+@using Microsoft.AspNetCore.Http
+@using System.Text.Json
 @{
     var searchValue = ViewData["currentSearchParam"] as string;
+    var userJson = Context.Session.GetString("user");
+    User? user = null;
+    if (userJson != null) user = JsonSerializer.Deserialize<User>(userJson);
 }
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -90,15 +94,23 @@
                             </div>
                             <!-- Header Top Left Area End Here -->
                             <!-- Begin Header Top Right Area -->
-                            
+
                             <div class="col-lg-7 col-md-6">
                                 <div class="header-top-right">
                                     <ul class="user-block list-inline">
-                                        <li><a href="/Auth/Login">My Account</a></li>
-                                        <li><a href="checkout.html">Checkout</a></li>
-                                        <li><a href="/Auth/Login">Sign In</a></li>
-                                        <li><a href="/Auth/Register">Register</a></li>
-
+                                        @{
+                                            if (user != null)
+                                            {
+                                                var fullName = $"{user.LastName} {user.FirstName}";
+                                                <li><a href="#">@fullName</a></li>
+                                                <li><a href="#">Log out</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li><a href="/Auth/Login">Sign In</a></li>
+                                                <li><a href="/Auth/Register">Register</a></li>
+                                            }
+                                        }
                                     </ul>
                                 </div>
                             </div>

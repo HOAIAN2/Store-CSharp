@@ -6,6 +6,7 @@ using Store.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Store.Controllers;
@@ -18,9 +19,9 @@ public class AuthController : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> Login(string username, string password, string returnUrl)
+    public async Task<IActionResult> Login(string username, string password)
     {
-        var user = dbContext.Users.FirstOrDefault(user => user.Username == username);
+        var user = await dbContext.Users.FirstOrDefaultAsync(user => user.Username == username);
 
         if (user != null)
         {
@@ -49,15 +50,15 @@ public class AuthController : BaseController
     public async Task<IActionResult> Register(string first_name, string last_name, string username, string password, DateTime birth, string gender, string address, string email, string phoneNumber)
     {
         //chưa test
-        var user = dbContext.Users.FirstOrDefault(user => user.Username == username);
+        var user = await dbContext.Users.FirstOrDefaultAsync(user => user.Username == username);
         if (user != null)
         {
             return View();
         }
         else
         {
-            var hardPassword = BC.HashPassword(password);
-            var newuser = new User
+            var hashedPassword = BC.HashPassword(password);
+            var newUser = new User
             {
                 RoleId = 2,
                 Username = username,
@@ -68,9 +69,9 @@ public class AuthController : BaseController
                 Address = address,
                 Email = email,
                 PhoneNumber = phoneNumber,
-                Password = hardPassword
+                Password = hashedPassword
             };
-            var create = dbContext.Users.Add(newuser);
+            var create = dbContext.Users.Add(newUser);
             if (create != null)
             {
                 return Redirect("/");
