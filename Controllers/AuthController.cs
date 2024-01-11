@@ -82,4 +82,9 @@ public class AuthController : BaseController
             }
         }
     }
+    public IActionResult Logout(string redirect)
+    {
+        HttpContext.Session.Remove("user");
+        return Redirect(redirect);
+    }
 }
