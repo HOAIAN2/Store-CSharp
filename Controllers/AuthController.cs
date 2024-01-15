@@ -24,7 +24,6 @@ public class AuthController : BaseController
     public async Task<IActionResult> Login(string username, string password, string redirect)
     {
         var user = await dbContext.Users.FirstOrDefaultAsync(user => user.Username == username);
-
         if (user != null)
         {
             var checkPassword = BC.Verify(password, user.Password);

@@ -1,0 +1,149 @@
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    ViewData["Title"] = "Home Page";
+    var error = ViewData["error"] as string;
+    var data = ViewData["data"] as OrderItem[];
+    var total = ViewData["total"] as int?;
+}
+
+@{
+    if (error != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @error
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+}
+
+<div class="container" style="margin-bottom: 50px;">
+    <div class="row">
+        <div class="col-12">
+            <form action="#">
+                <div class="table-content table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="fb-product-remove">remove</th>
+                                <th class="fb-product-thumbnail">images</th>
+                                <th class="cart-product-name">Product</th>
+                                <th class="fb-product-price">Unit Price</th>
+                                <th class="fb-product-quantity">Quantity</th>
+                                <th class="fb-product-subtotal">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @{
+                                foreach (var item in data)
+                                {
+                                    <tr>
+                                        <td class="fb-product-remove"><a
+                                                href="@Url.Action("Delete","Order", new { id = @item.Product.Id })"><i
+                                                    class="fa fa-times"></i></a>
+                                        </td>
+                                        <td class="fb-product-thumbnail"><a style="max-height: 125px; max-width: 125px"
+                                                href="#"><img src="~/assets/images/product/@item.Product.Images"
+                                                    alt="FB's Product Image"></a>
+                                        </td>
+                                        <td class="fb-product-name"><a href="#">@item.Product.ProductName</a></td>
+                                        <td class="fb-product-price"><span class="amount">$@item.Price</span></td>
+                                        @{
+                                            var totalPrice = item.Price * item.Quantity;
+                                            var Quantity = string.Concat("wrap-qtybutton", item.Product.Id);
+                                            var product_subtotal = string.Concat("product_subtotal", item.Product.Id);
+
+                                        }
+                                        <td class="quantity">
+                                            <label>Quantity</label>
+                                            <div class="cart-plus-minus" index=@item.Product.Id>
+                                                <input class="cart-plus-minus-box" value=@item.Quantity type="text">
+                                                <div class="dec qtybutton"><i class="fa fa-angle-down"></i>
+                                                </div>
+                                                <div class="inc qtybutton"><i class="fa fa-angle-up"></i>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="product-subtotal" id=@product_subtotal value=@totalPrice><span
+                                                class="amount">$@totalPrice</span>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5 ms-auto">
+                        <div class="cart-page-total">
+                            <h2>Cart totals</h2>
+                            <ul>
+
+                                <li>Subtotal <span>$130.00</span></li>
+                                <li>Total <span id="total-order" value=@total>$@total</span></li>
+                            </ul>
+                            <a href="#">Pay</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="fb-branding-wrap pb-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="fb-branding bg-white">
+                    <div class="fb-branding_active owl-carousel">
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="~/assets/images/branding/1.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="~/assets/images/branding/2.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="~/assets/images/branding/3.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="~/assets/images/branding/4.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="~/assets/images/branding/5.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="assets/images/branding/6.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="assets/images/branding/1.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="assets/images/branding/2.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

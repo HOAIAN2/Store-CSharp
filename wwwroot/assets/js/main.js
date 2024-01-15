@@ -474,9 +474,9 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
         });
         amountprice.val(
             '$' +
-                sliderrange.slider('values', 0) +
-                ' - $' +
-                sliderrange.slider('values', 1)
+            sliderrange.slider('values', 0) +
+            ' - $' +
+            sliderrange.slider('values', 1)
         );
     });
     /*----------------------------------------*/
@@ -488,17 +488,27 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
     $('.qtybutton').on('click', function () {
         var $button = $(this);
         var oldValue = $button.parent().find('input').val();
+        var resuls = document.querySelector("#product_subtotal" + $(this)[0].parentElement.getAttribute('index'))
+        var total = document.querySelector('#total-order')
         if ($button.hasClass('inc')) {
             var newVal = parseFloat(oldValue) + 1;
+            var pricehandle = parseInt(total.getAttribute('value')) + parseInt(resuls.getAttribute('value'))
+            total.textContent = "$" + pricehandle
+            total.setAttribute('value', pricehandle)
         } else {
             // Don't allow decrementing below zero
             if (oldValue > 1) {
                 var newVal = parseFloat(oldValue) - 1;
+                var pricehandle = parseInt(total.getAttribute('value')) - parseInt(resuls.getAttribute('value'))
+                total.textContent = "$" + pricehandle
+                total.setAttribute('value', pricehandle)
             } else {
                 newVal = 1;
             }
         }
         $button.parent().find('input').val(newVal);
+        resuls.textContent = "$" + resuls.getAttribute('value') * newVal
+
     });
     /*----------------------------------------*/
     /* 18. FB's Scroll Up
