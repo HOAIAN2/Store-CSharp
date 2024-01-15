@@ -68,7 +68,7 @@ public class OrderController : BaseController
                     if (order != null)
                     {
                         order.Paid = true;
-                        order.PaidMethodId = Paymentmethod;
+                        order.PaidMethodId = Paymentmethod == 1 || Paymentmethod == 2 ? Paymentmethod : 1;
                         dbContext.Orders.Update(order);
                         await dbContext.SaveChangesAsync();
                     }
