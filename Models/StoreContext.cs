@@ -60,9 +60,9 @@ namespace Store.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Comment1)
+                entity.Property(e => e.Content)
                     .HasMaxLength(255)
-                    .HasColumnName("comment");
+                    .HasColumnName("content");
 
                 entity.Property(e => e.CommentDate)
                     .HasColumnType("date")

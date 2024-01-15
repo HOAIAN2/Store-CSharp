@@ -8,7 +8,7 @@ namespace Store.Models
         public int Id { get; set; }
         public int UserId { get; set; }
         public int ProductId { get; set; }
-        public string Comment1 { get; set; } = null!;
+        public string Content { get; set; } = null!;
         public DateTime CommentDate { get; set; }
 
         public virtual Product Product { get; set; } = null!;
