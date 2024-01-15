@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Store.Models
 {
@@ -15,6 +16,7 @@ namespace Store.Models
         public DateTime? OrderDate { get; set; }
         public string? VoucherId { get; set; }
         public int? PaidMethodId { get; set; }
+        [Required]
         public bool Paid { get; set; }
 
         public virtual PaymentMethod? PaidMethod { get; set; }
