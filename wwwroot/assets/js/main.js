@@ -495,6 +495,15 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
             var pricehandle = parseInt(total.getAttribute('value')) + parseInt(resuls.getAttribute('value'))
             total.textContent = "$" + pricehandle
             total.setAttribute('value', pricehandle)
+            $.ajax({
+                type: 'POST',
+                url: "/Order/addQuantity",
+                data: {
+                    id: 1,
+                    type: 'dec'
+                },
+            })
+
         } else {
             // Don't allow decrementing below zero
             if (oldValue > 1) {
@@ -502,6 +511,14 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
                 var pricehandle = parseInt(total.getAttribute('value')) - parseInt(resuls.getAttribute('value'))
                 total.textContent = "$" + pricehandle
                 total.setAttribute('value', pricehandle)
+                $.ajax({
+                    type: 'POST',
+                    url: "/Order/addQuantity",
+                    data: {
+                        id: 1,
+                        type: 'inc'
+                    },
+                })
             } else {
                 newVal = 1;
             }

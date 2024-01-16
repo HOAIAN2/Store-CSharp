@@ -51,6 +51,7 @@
                                         <td class="fb-product-name"><a href="#">@item.Product.ProductName</a></td>
                                         <td class="fb-product-price"><span class="amount">$@item.Price</span></td>
                                         @{
+
                                             var totalPrice = item.Price * item.Quantity;
                                             var Quantity = string.Concat("wrap-qtybutton", item.Product.Id);
                                             var product_subtotal = string.Concat("product_subtotal", item.Product.Id);
@@ -66,7 +67,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="product-subtotal" id=@product_subtotal value=@totalPrice><span
+                                        <td class="product-subtotal" id=@product_subtotal value=@item.Price><span
                                                 class="amount">$@totalPrice</span>
                                         </td>
                                     </tr>
@@ -82,11 +83,10 @@
                         <div class="cart-page-total">
                             <h2>Cart totals</h2>
                             <ul>
-
                                 <li>Subtotal <span>$130.00</span></li>
                                 <li>Total <span id="total-order" value=@total>$@total</span></li>
                             </ul>
-                            <a href="#">Pay</a>
+                            <a href="/Order/Pay">Pay</a>
                         </div>
                     </div>
                 </div>

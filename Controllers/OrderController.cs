@@ -21,7 +21,7 @@ public class OrderController : BaseController
         var user = JsonSerializer.Deserialize<User>(userJson);
         var order = await dbContext.Orders.FirstOrDefaultAsync(order => order.UserId == user.Id && !order.Paid);
         var data = dbContext.OrderItems.Include(or => or.Product).Where(or => or.OrderId == order.Id).ToArray();
-        var total = dbContext.OrderItems.Include(or => or.Product).Where(or => or.OrderId == order.Id).Sum(or => or.Price);
+        var total = dbContext.OrderItems.Include(or => or.Product).Where(or => or.OrderId == order.Id).Sum(or => or.Price * or.Quantity);
         ViewData["total"] = total;
         ViewData["data"] = data;
         return View();
@@ -54,6 +54,43 @@ public class OrderController : BaseController
         }
         return Redirect("/Order/Index");
     }
+
+    public async Task<IActionResult> addQuantity(int id, string type)
+    {
+        var userJson = HttpContext.Session.GetString("user");
+        if (userJson != null)
+        {
+            var user = JsonSerializer.Deserialize<User>(userJson);
+            if (user != null)
+            {
+                var order = await dbContext.Orders.FirstOrDefaultAsync(order => order.UserId == user.Id && !order.Paid);
+                if (order != null)
+                {
+                    var orderitem = await dbContext.OrderItems.FirstOrDefaultAsync(or => or.OrderId == order.Id && or.ProductId == id);
+                    if (orderitem != null)
+                    {
+                        if (type == "dec")
+                        {
+                            orderitem.Quantity = orderitem.Quantity + 1;
+                        }
+                        else if (type == "inc")
+                        {
+                            orderitem.Quantity = orderitem.Quantity - 1;
+                        }
+                        else
+                        {
+                            return Redirect("/Order/Index");
+                        }
+                        dbContext.OrderItems.Update(orderitem);
+                        await dbContext.SaveChangesAsync();
+                    }
+                }
+            }
+        }
+
+        return Redirect("/Order/Index");
+    }
+
     public async Task<IActionResult> Pay(int Paymentmethod)
     {
         var userJson = HttpContext.Session.GetString("user");
