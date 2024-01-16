@@ -26,11 +26,19 @@ public class AuthController : BaseController
         var user = await dbContext.Users.FirstOrDefaultAsync(user => user.Username == username);
         if (user != null)
         {
+            var role = await dbContext.Roles
+             .Select(u => new
+             {
+                 u.Name,
+                 u.Id,
+             }).FirstOrDefaultAsync(r => r.Id == user.RoleId);
+            Console.WriteLine(role.Name);
             var checkPassword = BC.Verify(password, user.Password);
             if (checkPassword)
             {
                 var jsonStr = JsonSerializer.Serialize(user);
                 HttpContext.Session.SetString("user", jsonStr);
+                HttpContext.Session.SetString("role", role.Name);
                 return Redirect(redirect);
             }
             else ViewData["error"] = "Mật khẩu không chính xác";

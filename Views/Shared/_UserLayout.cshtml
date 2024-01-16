@@ -3,7 +3,10 @@
 @{
     var searchValue = ViewData["currentSearchParam"] as string;
     var userJson = Context.Session.GetString("user");
+    var role = Context.Session.GetString("role");
+
     User? user = null;
+
     if (userJson != null) user = JsonSerializer.Deserialize<User>(userJson);
 }
 <!doctype html>
@@ -101,6 +104,10 @@
                                         @{
                                             if (user != null)
                                             {
+                                                if (role == "admin")
+                                                {
+                                                    <li><a href="/Admin/Index">@role</a></li>
+                                                }
                                                 var fullName = $"{user.LastName} {user.FirstName}";
                                                 <li><a href="#">@fullName</a></li>
                                                 <li><a href="/Order/Index">Order</a></li>

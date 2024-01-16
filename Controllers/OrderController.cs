@@ -19,13 +19,15 @@ public class OrderController : BaseController
     {
         var userJson = HttpContext.Session.GetString("user");
         var user = JsonSerializer.Deserialize<User>(userJson);
-        var order = await dbContext.Orders.FirstOrDefaultAsync(order => order.UserId == user.Id && order.Paid == false);
+        var order = await dbContext.Orders.FirstOrDefaultAsync(order => order.UserId == user.Id);
         if (order != null)
         {
             var data = dbContext.OrderItems.Include(or => or.Product).Where(or => or.OrderId == order.Id).ToArray();
             var total = dbContext.OrderItems.Include(or => or.Product).Where(or => or.OrderId == order.Id).Sum(or => or.Price * or.Quantity);
             ViewData["total"] = total;
             ViewData["data"] = data;
+            if (order.Paid == true) ViewData["type"] = "already_bought";
+            else ViewData["type"] = "bought";
         }
         return View();
     }
