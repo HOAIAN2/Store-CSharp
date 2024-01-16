@@ -2,8 +2,9 @@
     Layout = "~/Views/Shared/_UserLayout.cshtml";
     ViewData["Title"] = "Home Page";
     var error = ViewData["error"] as string;
-    var data = ViewData["data"] as OrderItem[];
+    var data = ViewData["data"] as List<OrderItem>;
     var total = ViewData["total"] as int?;
+    var type = ViewData["type"] as string;
 }
 
 @{
@@ -37,42 +38,44 @@
                         <tbody>
 
                             @{
-                                if(data != null){
-                                foreach (var item in data)
+                                Console.WriteLine(data);
+                                if (data != null)
                                 {
-                                    <tr>
-                                        <td class="fb-product-remove"><a
-                                                href="@Url.Action("Delete","Order", new { id = @item.Product.Id })"><i
-                                                    class="fa fa-times"></i></a>
-                                        </td>
-                                        <td class="fb-product-thumbnail"><a style="max-height: 125px; max-width: 125px"
-                                                href="#"><img src="~/assets/images/product/@item.Product.Images"
-                                                    alt="FB's Product Image"></a>
-                                        </td>
-                                        <td class="fb-product-name"><a href="#">@item.Product.ProductName</a></td>
-                                        <td class="fb-product-price"><span class="amount">$@item.Price</span></td>
-                                        @{
+                                    foreach (var item in data)
+                                    {
+                                        <tr>
+                                            <td class="fb-product-remove"><a
+                                                    href="@Url.Action("Delete","Order", new { id = @item.Product.Id })"><i
+                                                        class="fa fa-times"></i></a>
+                                            </td>
+                                            <td class="fb-product-thumbnail"><a style="max-height: 125px; max-width: 125px"
+                                                    href="#"><img src="~/assets/images/product/@item.Product.Images"
+                                                        alt="FB's Product Image"></a>
+                                            </td>
+                                            <td class="fb-product-name"><a href="#">@item.Product.ProductName</a></td>
+                                            <td class="fb-product-price"><span class="amount">$@item.Price</span></td>
+                                            @{
 
-                                            var totalPrice = item.Price * item.Quantity;
-                                            var Quantity = string.Concat("wrap-qtybutton", item.Product.Id);
-                                            var product_subtotal = string.Concat("product_subtotal", item.Product.Id);
+                                                var totalPrice = item.Price * item.Quantity;
+                                                var Quantity = string.Concat("wrap-qtybutton", item.Product.Id);
+                                                var product_subtotal = string.Concat("product_subtotal", item.Product.Id);
 
-                                        }
-                                        <td class="quantity">
-                                            <label>Quantity</label>
-                                            <div class="cart-plus-minus" index=@item.Product.Id>
-                                                <input class="cart-plus-minus-box" value=@item.Quantity type="text">
-                                                <div class="dec qtybutton"><i class="fa fa-angle-down"></i>
+                                            }
+                                            <td class="quantity">
+                                                <label>Quantity</label>
+                                                <div class="cart-plus-minus" index=@item.Product.Id>
+                                                    <input class="cart-plus-minus-box" value=@item.Quantity type="text">
+                                                    <div class="dec qtybutton"><i class="fa fa-angle-down"></i>
+                                                    </div>
+                                                    <div class="inc qtybutton"><i class="fa fa-angle-up"></i>
+                                                    </div>
                                                 </div>
-                                                <div class="inc qtybutton"><i class="fa fa-angle-up"></i>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="product-subtotal" id=@product_subtotal value=@item.Price><span
-                                                class="amount">$@totalPrice</span>
-                                        </td>
-                                    </tr>
-                                }
+                                            </td>
+                                            <td class="product-subtotal" id=@product_subtotal value=@item.Price><span
+                                                    class="amount">$@totalPrice</span>
+                                            </td>
+                                        </tr>
+                                    }
                                 }
                             }
 
@@ -80,18 +83,23 @@
                     </table>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-5 ms-auto">
-                        <div class="cart-page-total">
-                            <h2>Cart totals</h2>
-                            <ul>
-                                <li>Subtotal <span>$130.00</span></li>
-                                <li>Total <span id="total-order" value=@total>$@total</span></li>
-                            </ul>
-                            <a href="/Order/Pay">Pay</a>
+                @{
+                    if (type == "bought")
+                    {
+                        <div class="row">
+                            <div class="col-md-5 ms-auto">
+                                <div class="cart-page-total">
+                                    <h2>Cart totals</h2>
+                                    <ul>
+                                        <li>Subtotal <span>$130.00</span></li>
+                                        <li>Total <span id="total-order" value=@total>$@total</span></li>
+                                    </ul>
+                                    <a href="/Order/Pay">Pay</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    }
+                }
             </form>
         </div>
     </div>

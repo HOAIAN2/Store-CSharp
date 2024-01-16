@@ -488,27 +488,14 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
     $('.qtybutton').on('click', function () {
         var $button = $(this);
         var oldValue = $button.parent().find('input').val();
+
         var resuls = document.querySelector("#product_subtotal" + $(this)[0].parentElement.getAttribute('index'))
         var total = document.querySelector('#total-order')
+        var quantity_product_detail = document.querySelector("#quantity_product_detail");
         if ($button.hasClass('inc')) {
             var newVal = parseFloat(oldValue) + 1;
-            var pricehandle = parseInt(total.getAttribute('value')) + parseInt(resuls.getAttribute('value'))
-            total.textContent = "$" + pricehandle
-            total.setAttribute('value', pricehandle)
-            $.ajax({
-                type: 'POST',
-                url: "/Order/addQuantity",
-                data: {
-                    id: 1,
-                    type: 'dec'
-                },
-            })
-
-        } else {
-            // Don't allow decrementing below zero
-            if (oldValue > 1) {
-                var newVal = parseFloat(oldValue) - 1;
-                var pricehandle = parseInt(total.getAttribute('value')) - parseInt(resuls.getAttribute('value'))
+            if (total) {
+                var pricehandle = parseInt(total.getAttribute('value')) + parseInt(resuls.getAttribute('value'))
                 total.textContent = "$" + pricehandle
                 total.setAttribute('value', pricehandle)
                 $.ajax({
@@ -516,16 +503,38 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
                     url: "/Order/addQuantity",
                     data: {
                         id: 1,
-                        type: 'inc'
+                        type: 'dec'
                     },
                 })
+            }
+        } else {
+            // Don't allow decrementing below zero
+            if (oldValue > 1) {
+                var newVal = parseFloat(oldValue) - 1;
+                if (total) {
+                    var pricehandle = parseInt(total.getAttribute('value')) - parseInt(resuls.getAttribute('value'))
+                    total.textContent = "$" + pricehandle
+                    total.setAttribute('value', pricehandle)
+                    $.ajax({
+                        type: 'POST',
+                        url: "/Order/addQuantity",
+                        data: {
+                            id: 1,
+                            type: 'inc'
+                        },
+                    })
+                }
             } else {
                 newVal = 1;
             }
         }
         $button.parent().find('input').val(newVal);
-        resuls.textContent = "$" + resuls.getAttribute('value') * newVal
-
+        if (resuls) {
+            resuls.textContent = "$" + resuls.getAttribute('value') * newVal
+        }
+        if (quantity_product_detail) {
+            quantity_product_detail.setAttribute('value', newVal);
+        }
     });
     /*----------------------------------------*/
     /* 18. FB's Scroll Up
