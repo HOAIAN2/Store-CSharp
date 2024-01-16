@@ -19,11 +19,14 @@ public class OrderController : BaseController
     {
         var userJson = HttpContext.Session.GetString("user");
         var user = JsonSerializer.Deserialize<User>(userJson);
-        var order = await dbContext.Orders.FirstOrDefaultAsync(order => order.UserId == user.Id && !order.Paid);
-        var data = dbContext.OrderItems.Include(or => or.Product).Where(or => or.OrderId == order.Id).ToArray();
-        var total = dbContext.OrderItems.Include(or => or.Product).Where(or => or.OrderId == order.Id).Sum(or => or.Price * or.Quantity);
-        ViewData["total"] = total;
-        ViewData["data"] = data;
+        var order = await dbContext.Orders.FirstOrDefaultAsync(order => order.UserId == user.Id && order.Paid == false);
+        if (order != null)
+        {
+            var data = dbContext.OrderItems.Include(or => or.Product).Where(or => or.OrderId == order.Id).ToArray();
+            var total = dbContext.OrderItems.Include(or => or.Product).Where(or => or.OrderId == order.Id).Sum(or => or.Price * or.Quantity);
+            ViewData["total"] = total;
+            ViewData["data"] = data;
+        }
         return View();
     }
     public async Task<IActionResult> Delete(int id)
