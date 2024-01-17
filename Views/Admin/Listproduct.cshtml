@@ -1,0 +1,267 @@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Home Page";
+    var error = ViewData["error"] as string;
+    var data = ViewData["products"] as List<Product>;
+    var total = ViewData["total"] as int?;
+    var previousUrl = ViewData["previousUrl"] as string;
+    var from = ViewData["from"] as int?;
+    var to = ViewData["to"] as int?;
+    var nextUrl = ViewData["nextUrl"] as string;
+
+}
+
+@{
+    if (error != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @error
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+}
+
+
+
+<div class="container" style="margin-bottom: 50px;">
+    <div class="row">
+        <div class="col-12">
+            <div>
+                <div class="table-content table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="fb-product-remove">remove</th>
+                                <th class="fb-product-thumbnail">images</th>
+                                <th class="cart-product-name">Product</th>
+                                <th class="fb-product-price">Unit Price</th>
+                                <th class="fb-product-quantity">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="wap_products">
+
+                            @{
+
+                                if (data != null)
+                                {
+                                    foreach (var item in data)
+                                    {
+                                        <tr>
+                                            <td class="fb-product-remove"><a
+                                                    href="@Url.Action("Delete","Admin", new { id = @item.Id,redirect = @Context.Request.Path  })"><i
+                                                        class="fa fa-times"></i></a>
+                                            </td>
+                                            <td class="fb-product-thumbnail"><a style="max-height: 125px; max-width: 125px"
+                                                    href="#"><img src="~/assets/images/product/@item.Images"
+                                                        alt="FB's Product Image"></a>
+                                            </td>
+                                            <td class="fb-product-name"><a href="#">@item.ProductName</a></td>
+                                            <td class="fb-product-price"><span class="amount">$@item.Price</span></td>
+
+                                            <td class="fb-product-price">
+
+                                                <button class="edit_product" value=@item.Id>Edit</button>
+                                            </td>
+
+
+                                        </tr>
+                                    }
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                    <div class="paginatoin-area paginatoin-column-view">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                @{
+                                    <p>Showing @from-@to of @total item(s)</p>
+                                }
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <ul class="pagination-box pt-xs-20 pb-xs-15">
+                                    @{
+                                        if (previousUrl != null)
+                                        {
+                                            <li><a href="@previousUrl" class="Previous"><i class="ion-chevron-left"></i>
+                                                    Previous</a>
+                                            </li>
+                                        }
+                                    }
+                                    @* <li class="active"><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li> *@
+                                    @{
+                                        if (nextUrl != null)
+                                        {
+                                            <li>
+                                                <a href="@nextUrl" class="Next"> Next <i class="ion-chevron-right"></i></a>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="fb-branding-wrap pb-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="fb-branding bg-white">
+                    <div class="fb-branding_active owl-carousel">
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="~/assets/images/branding/1.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="~/assets/images/branding/2.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="~/assets/images/branding/3.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="~/assets/images/branding/4.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="~/assets/images/branding/5.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="assets/images/branding/6.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="assets/images/branding/1.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                        <div class="branding-item">
+                            <a href="#">
+                                <img src="assets/images/branding/2.jpg" alt="FB's Branding">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="page-section pt-60 pb-60 popup hidden">
+    <div class="container">
+        <div class="row center_row">
+            <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb-30">
+                <!-- Login Form s-->
+                <div>
+                    <div class="login-form">
+                        <h4 class="login-title">Edit</h4>
+                        <div class="row">
+                            <div class="col-md-12 col-12 mb-20">
+                                <label>Name*</label>
+                                <input id="name-edit" class="mb-0" type="text" placeholder="Name Product">
+                            </div>
+
+                            <div class="col-12 mb-20" style="display: flex; justify-content: space-between">
+                                <div style="width: 50%; padding-right: 5px">
+                                    <label>price</label>
+                                    <input id="price-edit" class="mb-0" type="text" placeholder="Price">
+                                </div>
+                                <div style="width: 50%; padding-left: 5px">
+                                    <label>quantity</label>
+                                    <input id="quantity-edit" class="mb-0" type="text" placeholder="Quantity">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <button class="register-button mt-0 save">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    document.querySelector("#wap_products").addEventListener('click', (e) => {
+        if (e.target.className == "edit_product") {
+            var id = parseInt(e.target.getAttribute('value'))
+            $.ajax({
+                type: 'get',
+                url: "/Admin/ProductDetail",
+                data: {
+                    id: id,
+                    type: 'dec'
+                },
+            })
+                .done(function (response) {
+                    document.querySelector("#name-edit").value = response.productName
+                    document.querySelector("#price-edit").value = response.price
+                    document.querySelector("#quantity-edit").value = response.quantity
+                    document.querySelector(".hidden").classList.remove('hidden')
+                })
+        }
+    })
+
+    document.querySelector(".popup").addEventListener("click", (e) => {
+        if (e.target.className.includes("popup") && !e.target.className.includes("hidden")) {
+            e.target.classList.add('hidden')
+        }
+    })
+
+    document.querySelector(".save").addEventListener("click", (e) => {
+        var name = document.querySelector("#name-edit").value
+        var price = document.querySelector("#price-edit").value
+        var quantity = document.querySelector("#quantity-edit").value
+        $.ajax({
+            type: 'post',
+            url: "/Admin/Editproduct",
+            data: {
+                ProductName: name,
+                Price: price,
+                Quantity: quantity,
+                type: 'dec'
+            },
+        })
+            .done(function (response) {
+                console.log(response)
+            })
+    })
+
+
+</script>
+
+
+
+
+@* var id = parseInt(e.target.getAttribute('value')) *@
+
+
+
+
+@* var a = @data[1].Id
+console.log($('td[name="tcol1"]')) *@

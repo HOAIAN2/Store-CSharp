@@ -1,24 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
+@using Microsoft.AspNetCore.Http
+@using System.Text.Json
+@{
+    var searchValue = ViewData["currentSearchParam"] as string;
+    var userJson = Context.Session.GetString("user");
+    var role = Context.Session.GetString("role");
+
+    User? user = null;
+
+    if (userJson != null) user = JsonSerializer.Deserialize<User>(userJson);
+}
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+
+<!-- Mirrored from htmldemo.net/fastbuy/fastbuy// by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 27 Aug 2023 10:02:29 GMT -->
 
 <head>
-
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>@ViewBag.Title</title>
+    <meta name="robots" content="noindex, follow" />
     <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>SB Admin 2 - Dashboard</title>
-
-    <!-- Custom fonts for this template-->
-    <link href="~/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="~/assets/images/favicon.ico">
     <!-- CSS
         ============================================ -->
@@ -36,201 +40,663 @@
     <link rel="stylesheet" href="~/assets/css/style.css">
     <!-- Modernizer JS -->
     <script src="~/assets/js/vendor/modernizr-3.11.2.min.js"></script>
-
 </head>
 
-<body id="page-top">
+<body>
+    <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <!-- Begin Body Wraper Area -->
+    <div class="body-wrapper">
+        <!-- Begin Header Area -->
+        <header class="bg-midnight">
+            <!-- Begin Header Top Area -->
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
-            </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
+            <!-- Header Top Area End Here -->
+            <!-- Begin Header Middle Area -->
+            <div class="header-middle">
+                <div class="container logo-nav">
+                    <div class="row align-items-center">
+                        <!-- Begin Logo Area -->
+                        <div class="col-lg-3">
+                            <div class="logo">
+                                <a href="/">
+                                    <img src="~/assets/images/menu/logo/1.png" alt="FB's Logo">
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Logo Area End Here -->
+                        <!-- Begin Header Middle Right Area -->
+                        <div class="col-lg-9">
+                            <!-- Begin Header Middle Right Area -->
+                            <div class="header-middle-right">
+                                <!-- Begin Header Middle Searchbox Area -->
+                                <form action="/Product/Search" class="hm-searchbox">
+                                    <select class="nice-select select-search-category">
+                                        <option value="0">All categories</option>
+                                        <option value="12">Electronics</option>
+                                        <option value="23">Cameras</option>
+                                        <option value="27">Cords and Cables</option>
+                                        <option value="28">gps accessories</option>
+                                        <option value="29">Microphones</option>
+                                        <option value="30">Wireless Transmitters</option>
+                                        <option value="24">GamePad</option>
+                                        <option value="31">cube lifestyle hd</option>
+                                        <option value="32">gopro hero4</option>
+                                        <option value="33">handycam cx405</option>
+                                        <option value="34">vixia hf r600</option>
+                                        <option value="25">Digital Cameras</option>
+                                        <option value="35">Gold eye</option>
+                                        <option value="36">Questek</option>
+                                        <option value="37">Snm</option>
+                                        <option value="38">Vantech</option>
+                                        <option value="26">Virtual Reality</option>
+                                        <option value="39">Samsung</option>
+                                        <option value="40">Toshiba</option>
+                                        <option value="41">Transcend</option>
+                                        <option value="42">Sandisk</option>
+                                        <option value="13">Book</option>
+                                        <option value="43">Children's Books</option>
+                                        <option value="45">Early Learning</option>
+                                        <option value="46">Animals</option>
+                                        <option value="47">Action</option>
+                                        <option value="48">Education</option>
+                                        <option value="44">comic book</option>
+                                        <option value="49">Superhero</option>
+                                        <option value="50">Slice-of-Life</option>
+                                        <option value="51">Humor</option>
+                                        <option value="52">Science-Fiction</option>
+                                        <option value="14">Kitchen</option>
+                                        <option value="53">Large Appliances</option>
+                                        <option value="55">Armchairs</option>
+                                        <option value="56">Bunk Bed</option>
+                                        <option value="57">Mattress</option>
+                                        <option value="58">Sideboard</option>
+                                        <option value="54">Small Appliances</option>
+                                        <option value="59">Bootees Bags</option>
+                                        <option value="60">Jackets</option>
+                                        <option value="61">Shelf</option>
+                                        <option value="62">Shoes</option>
+                                        <option value="83">Drinkware</option>
+                                        <option value="85">Tour Drinkware</option>
+                                        <option value="86">Hatch Drinkware</option>
+                                        <option value="87">Direction Drinkware</option>
+                                        <option value="88">Crescent Drinkware</option>
+                                        <option value="84">Cookware</option>
+                                        <option value="89">Cookware Brands</option>
+                                        <option value="90">Cookware Sets</option>
+                                        <option value="91">Individual Cookware</option>
+                                        <option value="92">Enamel Cookware</option>
+                                        <option value="15">Tablets</option>
+                                        <option value="63">Tablet</option>
+                                        <option value="65">Samsung</option>
+                                        <option value="66">LG</option>
+                                        <option value="67">Apple</option>
+                                        <option value="68">Sony</option>
+                                        <option value="64">Smartphone</option>
+                                        <option value="69">Nokia</option>
+                                        <option value="70">Sony</option>
+                                        <option value="71">Apple</option>
+                                        <option value="72">Samsung</option>
+                                        <option value="16">Furnitured</option>
+                                        <option value="73">bedroom</option>
+                                        <option value="75">Bed</option>
+                                        <option value="76">lamp</option>
+                                        <option value="77">Mattress Sets</option>
+                                        <option value="78">Home Office</option>
+                                        <option value="74">livingroom</option>
+                                        <option value="79">chair</option>
+                                        <option value="80">table</option>
+                                        <option value="81">carpet</option>
+                                        <option value="82">Sofa</option>
+                                        <option value="17">Video games</option>
+                                        <option value="18">Sport</option>
+                                        <option value="19">Fruits</option>
+                                        <option value="20">Computer</option>
+                                        <option value="21">Meat</option>
+                                        <option value="22">Accessories</option>
+                                    </select>
+                                    @if (searchValue != null)
+                                    {
+                                        <input name="name" type="text" placeholder="Enter your search key ..."
+                                            value=@searchValue>
+                                    }
+                                    else
+                                    {
+                                        <input name="name" type="text" placeholder="Enter your search key ...">
+                                    }
+                                    <button class="fb-search_btn" type="submit"><i class="fa fa-search"></i></button>
+                                </form>
+                                <!-- Header Middle Searchbox Area End Here -->
+                                @* <ul class="hm-menu">
+                                <!-- Begin Header Mini Cart Area -->
+                                <li class="hm-minicart">
+                                <div class="hm-minicart-trigger">
+                                <span class="item-icon"></span>
+                                <span class="item-text">My Cart
+                                <span class="cart-item-count">2</span>
+                                </span>
+                                <span class="item-total">$120.00</span>
+                                </div>
+                                <span></span>
+                                <div class="minicart">
+                                <ul class="minicart-product-list">
+                                <li>
+                                <a href="product-details.html" class="minicart-product-image">
+                                <img src="~/assets/images/minicart/1.jpg" alt="FB's Thumbnail">
+                                <span class="product-quantity">1x</span>
+                                </a>
+                                <div class="minicart-product-details">
+                                <h6><a href="product-details.html">Printed Dress</a></h6>
+                                <span>$23.39</span>
+                                </div>
+                                <button class="close" title="Remove">
+                                <i class="fa fa-close"></i>
+                                </button>
+                                </li>
+                                <li>
+                                <a href="product-details.html" class="minicart-product-image">
+                                <img src="~/assets/images/minicart/2.jpg" alt="FB's Thumbnail">
+                                <span class="product-quantity">1x</span>
+                                </a>
+                                <div class="minicart-product-details">
+                                <h6><a href="product-details.html">Printed Chiffon Dress</a>
+                                </h6>
+                                <span>$16.40</span>
+                                </div>
+                                <button class="close" title="Remove">
+                                <i class="fa fa-close"></i>
+                                </button>
+                                </li>
+                                </ul>
+                                <div class="price-content">
+                                <p class="minicart-total">SUBTOTAL<span>$39.79</span></p>
+                                <p class="minicart-total">Shipping<span>$7.00</span></p>
+                                <p class="minicart-total">Taxes<span>$0.00</span></p>
+                                <p class="minicart-total">Total<span>$46.79</span></p>
+                                </div>
+                                <div class="minicart-button text-center">
+                                <a href="checkout.html" class="fb-btn">
+                                <span>Checkout</span>
+                                </a>
+                                </div>
+                                </div>
+                                </li>
+                                <!-- Header Mini Cart Area End Here -->
+                                </ul> *@
+                                <ul class="user-block list-inline">
+                                    @{
+                                        if (user != null)
+                                        {
+                                            if (role == "admin")
+                                            {
+                                                <li><a href="/Admin/Index">@role</a></li>
+                                            }
+                                            var fullName = $"{user.LastName} {user.FirstName}";
+                                            <li><a href="#">@fullName</a></li>
+                                            <li><a href="/Order/Index">Order</a></li>
+                                            <li>
+                                                <a href="javascript:void(0)"
+                                                    onclick="document.getElementById('logoutForm').submit();">
+                                                    Logout
+                                                </a>
+                                            </li>
+                                            <form id="logoutForm" method="post" action="@Url.Action("Logout", "Auth")">
+                                                <input hidden name="redirect" value="@Context.Request.Path">
+                                                @Html.AntiForgeryToken()
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <li><a href="/Auth/Login">Sign In</a></li>
+                                            <li><a href="/Auth/Register">Register</a></li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                            <!-- Header Middle Right Area End Here -->
+                        </div>
+                        <!-- Header Middle Right Area End Here -->
                     </div>
                 </div>
-            </li>
-
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Addons
             </div>
+            <!-- Header Middle Area End Here -->
+            <!-- Begin Header Bottom Area -->
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
-            </li>
-
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-            <!-- Sidebar Message -->
-            <div class="sidebar-card d-none d-lg-flex">
-                <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
-                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components,
-                    and more!</p>
-                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to
-                    Pro!</a>
-            </div>
-
-        </ul>
-        <!-- End of Sidebar -->
-
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-
-            @RenderBody()
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
-
+            <!-- Header Bottom Area End Here -->
+        </header>
+        <!-- Header Area End Here -->
+        <!-- Begin Slider With Banner Area -->
+        @* <div class="slider-with-banner pt-30">
+        <div class="container">
+        <div class="row">
+        <!-- Begin Slider Area -->
+        <div class="col-lg-9">
+        <div class="slider-area">
+        <div class="slider-active owl-carousel">
+        <!-- Begin Single Slide Area -->
+        <div class="single-slide align-center-left animation-style-01 bg-1">
+        <div class="slider-progress"></div>
+        <div class="slider-content">
+        <h2>Big Sale</h2>
+        <h3>Up To 50% Off</h3>
+        <h5>All Selected Items</h5>
+        <div class="default-btn slide-btn">
+        <a class="fb-links fb-links-round" href="shop-left-sidebar.html">Shop
+        Now</a>
         </div>
-        <!-- End of Content Wrapper -->
+        </div>
+        </div>
+        <!-- Single Slide Area End Here -->
+        <!-- Begin Single Slide Area -->
+        <div class="single-slide align-center-left animation-style-02 bg-2">
+        <div class="slider-progress"></div>
+        <div class="slider-content">
+        <h2>Win 1 Off 4</h2>
+        <h3>Bakery Mixers</h3>
+        <h5>Each Valued At $749.35</h5>
+        <div class="default-btn slide-btn">
+        <a class="fb-links fb-links-round" href="shop-left-sidebar.html">Shop
+        Now</a>
+        </div>
+        </div>
+        </div>
+        <!-- Single Slide Area End Here -->
+        </div>
+        </div>
+        </div>
+        <!-- Slider Area End Here -->
+        <div class="col-lg-3">
+        <div class="row">
+        <!-- Begin FB's Banner Area -->
+        <div class="col-lg-12 col-sm-6">
+        <div class="fb-banner fb-img-hover-effect pt-sm-30 pt-xs-30">
+        <a href="#">
+        <img src="~/assets/images/banner/1_1.jpg" alt="FB'S Banner">
+        </a>
+        </div>
+        </div>
+        <div class="col-lg-12 col-sm-6">
+        <div class="fb-banner fb-img-hover-effect pt-30">
+        <a href="#">
+        <img src="~/assets/images/banner/1_2.jpg" alt="FB'S Banner">
+        </a>
+        </div>
+        </div>
+        <!-- FB's Banner Area End Here -->
+        </div>
+        </div>
+        </div>
+        </div>
+        </div> *@
+        <!-- Slider With Banner Area End Here -->
+        <!-- Begin FB's customer Support Area -->
+        <div class="breadcrumb-area pt-30 pb-30">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="breadcrumb-content">
+                            <ul>
+                                <li><a>About</a></li>
+                                <li><a href="/Admin/Listproduct">Products</a></li>
 
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        @RenderBody()
+        <div class="fb-footer">
+            <!-- Begin Footer Top Area -->
+            <div class="fb-footer_top">
+                <div class="container">
+                    <div class="row">
+                        <!-- Begin FB's Newsletters Area -->
+                        <div class="col-lg-5">
+                            <div class="fb-newsletters">
+                                <h2 class="newsletters-headeing">Sign Up For Newsletters</h2>
+                                <p class="short-desc">Be The First To Know. Sign Up For Newsletter Today</p>
+                            </div>
+                        </div>
+                        <!-- FB's Newsletters Area End Here -->
+                        <!-- Begin FB's Newsletters Form Area -->
+                        <div class="col-lg-7">
+                            <div class="fb-newsletters_form pt-sm-15 pt-xs-15">
+                                <form
+                                    action="http://devitems.us11.list-manage.com/subscribe/post?u=6bbb9b6f5827bd842d9640c82&amp;id=05d85f18ef"
+                                    method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form"
+                                    class="footer-subscribe-form validate" target="_blank" novalidate>
+                                    <div id="mc_embed_signup_scroll">
+                                        <div id="mc-form" class="mc-form subscribe-form form-group">
+                                            <input id="mc-email" type="email" autocomplete="off"
+                                                placeholder="Enter your email" />
+                                            <button class="btn mt-sm-15 mt-xs-15" id="mc-submit">Subscribe!</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- FB's Newsletters Form Area End Here -->
+                    </div>
+                </div>
+            </div>
+            <!-- Footer Top Area End Here -->
+            <!-- Begin FB's Footer Middle Area -->
+            <div class="fb-footer_middle bg-white">
+                <div class="container">
+                    <!-- Begin Footer Middle Top Area -->
+                    <div class="footer-middle_top">
+                        <div class="row">
+                            <!-- Begin FB's Footer Widget Area -->
+                            <div class="col-xl-2 col-lg-2 col-md-3 col-sm-5">
+                                <div class="fb-footer_widget pt-20">
+                                    <h3 class="fb-footer-widget-headeing">Products</h3>
+                                    <ul>
+                                        <li><a href="#">Prices drop</a></li>
+                                        <li><a href="#">New products</a></li>
+                                        <li><a href="#">Best sales</a></li>
+                                        <li><a href="#">Login</a></li>
+                                        <li><a href="#">My account</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- FB's Footer Widget Area End Here -->
+                            <!-- Begin FB's Footer Widget Area -->
+                            <div class="col-xl-3 col-lg-3 col-md-5 col-sm-7">
+                                <div class="fb-footer_widget pt-20 pt-xs-0">
+                                    <h3 class="fb-footer-widget-headeing">Our company</h3>
+                                    <ul>
+                                        <li><a href="#">Delivery</a></li>
+                                        <li><a href="#">Legal Notice</a></li>
+                                        <li><a href="#">Terms and conditions of use</a></li>
+                                        <li><a href="#">About us</a></li>
+                                        <li><a href="#">Contact us</a></li>
+                                        <li><a href="#">Stores</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- FB's Footer Widget Area End Here -->
+                            <!-- Begin FB's Footer Widget Area -->
+                            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-5">
+                                <div class="fb-footer_widget pt-20 pt-xs-0">
+                                    <h3 class="fb-footer-widget-headeing">Your account</h3>
+                                    <ul>
+                                        <li><a href="#">Addresses</a></li>
+                                        <li><a href="#">Credit slips</a></li>
+                                        <li><a href="#">Orders</a></li>
+                                        <li><a href="#">Personal info</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- FB's Footer Widget Area End Here -->
+                            <!-- Begin FB's Footer Widget Area -->
+                            <div class="col-xl-5 col-lg-5 col-sm-7">
+                                <div class="footer-widget-logo pt-30 mb-20 pt-sm-5 pt-xs-5">
+                                    <a href="/">
+                                        <img src="~/assets/images/menu/logo/2.png" alt="FB's Logo">
+                                    </a>
+                                </div>
+                                <div class="footer-widget-info">
+                                    <p class="footer-widget_short-desc">We are a team of designers and developers that
+                                        create high quality HTML Template & Woocommerce, Shopify Theme.
+                                    </p>
+                                    <div class="footer-widget_address">
+                                        <h2>Contact info:</h2>
+                                        <p>169-C, Technohub, Dubai Silicon Oasis.</p>
+                                    </div>
+                                    <div class="footer-widget-social-link">
+                                        <ul class="social-link">
+                                            <li class="facebook">
+                                                <a href="https://www.facebook.com/" data-bs-toggle="tooltip"
+                                                    target="_blank" title="Facebook">
+                                                    <i class="fa fa-facebook"></i>
+                                                </a>
+                                            </li>
+                                            <li class="twitter">
+                                                <a href="https://twitter.com/" data-bs-toggle="tooltip" target="_blank"
+                                                    title="Twitter">
+                                                    <i class="fa fa-twitter"></i>
+                                                </a>
+                                            </li>
+                                            <li class="youtube">
+                                                <a href="https://www.youtube.com/" data-bs-toggle="tooltip"
+                                                    target="_blank" title="Youtube">
+                                                    <i class="fa fa-youtube"></i>
+                                                </a>
+                                            </li>
+                                            <li class="google-plus">
+                                                <a href="https://www.plus.google.com/discover" data-bs-toggle="tooltip"
+                                                    target="_blank" title="Google Plus">
+                                                    <i class="fa fa-google-plus"></i>
+                                                </a>
+                                            </li>
+                                            <li class="instagram">
+                                                <a href="https://www.instagram.com/" data-bs-toggle="tooltip"
+                                                    target="_blank" title="Instagram">
+                                                    <i class="fa fa-instagram"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- FB's Footer Widget Area End Here -->
+                        </div>
+                    </div>
+                    <!-- Footer Middle Top Area End Here -->
+                    <!-- Begin Footer Middle Bottom Area -->
+                    <div class="footer-middle-bottom">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <!-- Begin Footer Tag Link Area -->
+                                <div class="footer-tag-links pt-20 pb-20">
+                                    <ul>
+                                        <li><a href="#">Online Shopping</a></li>
+                                        <li><a href="#">Promotions</a></li>
+                                        <li><a href="#">My Orders</a></li>
+                                        <li><a href="#">Help</a></li>
+                                        <li><a href="#">Customer Service</a></li>
+                                        <li><a href="#">Support</a></li>
+                                        <li><a href="#">Most Populars</a></li>
+                                        <li><a href="#">New Arrivals</a></li>
+                                        <li><a href="#">Special Products</a></li>
+                                        <li><a href="#">Manufacturers</a></li>
+                                        <li><a href="#">Our Stores</a></li>
+                                        <li><a href="#">Shipping</a></li>
+                                        <li><a href="#">Payments</a></li>
+                                        <li><a href="#">Warantee</a></li>
+                                        <li><a href="#">Refunds</a></li>
+                                        <li><a href="#">Checkout</a></li>
+                                        <li><a href="#">Discount</a></li>
+                                        <li><a href="#">Terms & Conditions</a></li>
+                                        <li><a href="#">Policy</a></li>
+                                        <li><a href="#">Shipping</a></li>
+                                        <li><a href="#">Payments</a></li>
+                                        <li><a href="#">Returns</a></li>
+                                        <li><a href="#">Refunds</a></li>
+                                    </ul>
+                                </div>
+                                <!-- Footer Tag Link Area End Here -->
+                                <!-- Begin Footer Payment Area -->
+                                <div class="payment text-center pb-30">
+                                    <a href="#">
+                                        <img src="~/assets/images/payment/1.png" alt="FB's Footer Payment">
+                                    </a>
+                                </div>
+                                <!-- Footer Payment Area End Here -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Footer Middle Bottom Area End Here -->
+                </div>
+            </div>
+            <!-- FB's Footer Middle Area End Here -->
+            <!-- Begin Footer Bottom Area -->
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="row">
+                        <!-- Begin Copyright Area -->
+                        <div class="col-lg-6 col-md-6">
+                            <div class="copyright">
+                                <span>Copyright &copy; 2023 <a href="#">Fastbuy.</a> All rights reserved.</span>
+                            </div>
+                        </div>
+                        <!-- Copyright Area End Here -->
+                        <!-- Begin Footer Bottom Menu Area -->
+                        <div class="col-lg-6 col-md-6">
+                            <div class="fotter-bottom_menu">
+                                <ul>
+                                    <li><a href="/">Home</a></li>
+                                    <li><a href="about-us.html">About</a></li>
+                                    <li><a href="shop-left-sidebar.html">Shop</a></li>
+                                    <li><a href="contact.html">Contact</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Footer Bottom Menu Area End Here -->
+                    </div>
+                </div>
+            </div>
+            <!-- Footer Bottom Area End Here -->
+        </div>
+        <!-- FB's Footer Area End Here -->
+        <!-- Begin Fb's Quick View | Modal Area -->
+        <div class="modal fade modal-wrapper" id="exampleModalCenter">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body pt-15 pb-10 pt-sm-10 pb-sm-30 pb-xs-50">
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <div class="modal-inner-area row">
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                <!-- Product Details Left -->
+                                <div class="product-details-left">
+                                    <div class="product-details-images slider-navigation-1">
+                                        <div class="lg-image">
+                                            <img src="~/assets/images/single-product/large-size/1.jpg"
+                                                alt="Single Product Image">
+                                        </div>
+                                        <div class="lg-image">
+                                            <img src="~/assets/images/single-product/large-size/2.jpg"
+                                                alt="Single Product Image">
+                                        </div>
+                                        <div class="lg-image">
+                                            <img src="~/assets/images/single-product/large-size/3.jpg"
+                                                alt="Single Product Image">
+                                        </div>
+                                        <div class="lg-image">
+                                            <img src="~/assets/images/single-product/large-size/4.jpg"
+                                                alt="Single Product Image">
+                                        </div>
+                                    </div>
+                                    <div class="product-details-thumbs">
+                                        <div class="sm-image"><img src="~/assets/images/single-product/small-size/1.jpg"
+                                                alt="Single Product Thumb">
+                                        </div>
+                                        <div class="sm-image"><img src="~/assets/images/single-product/small-size/2.jpg"
+                                                alt="Single Product Thumb">
+                                        </div>
+                                        <div class="sm-image"><img src="~/assets/images/single-product/small-size/3.jpg"
+                                                alt="Single Product Thumb">
+                                        </div>
+                                        <div class="sm-image"><img src="~/assets/images/single-product/small-size/4.jpg"
+                                                alt="Single Product Thumb">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--// Product Details Left -->
+                            </div>
+                            <div class="col-lg-7 col-md-7 col-sm-7">
+                                <div class="product-details-view-content pt-40 pt-sm-25">
+                                    <div class="product-info">
+                                        <h2>Printed Dress</h2>
+                                        <div class="price-box pb-20">
+                                            <span class="new-price new-price-2">$57.98</span>
+                                            <span class="old-price">$57.98</span>
+                                        </div>
+                                        <div class="sticker-2">Save 8%</div>
+                                        <div class="product-desc">
+                                            <p>
+                                                <span>100% cotton double printed dress. Black and white striped top and
+                                                    orange high waisted skater skirt bottom.
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="product-variants">
+                                            <div class="produt-variants-size">
+                                                <label>Dimension</label>
+                                                <select class="nice-select">
+                                                    <option value="1" title="S" selected="selected">S</option>
+                                                    <option value="2" title="M">M</option>
+                                                    <option value="3" title="L">L</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="single-add-to-cart">
+                                            <form action="#" class="cart-quantity">
+                                                <div class="quantity">
+                                                    <label>Quantity</label>
+                                                    <div class="cart-plus-minus">
+                                                        <input class="cart-plus-minus-box" value="1" type="text">
+                                                        <div class="dec qtybutton"><i class="fa fa-angle-down"></i>
+                                                        </div>
+                                                        <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
+                                                    </div>
+                                                </div>
+                                                <button class="fb-btn" type="submit">Add to cart</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="footer-widget-social-link modal-social-link">
+                                        <span>Share: </span>
+                                        <ul class="social-link">
+                                            <li class="facebook">
+                                                <a href="https://www.facebook.com/" data-bs-toggle="tooltip"
+                                                    target="_blank" title="Facebook">
+                                                    <i class="fa fa-facebook"></i>
+                                                </a>
+                                            </li>
+                                            <li class="twitter">
+                                                <a href="https://twitter.com/" data-bs-toggle="tooltip" target="_blank"
+                                                    title="Twitter">
+                                                    <i class="fa fa-twitter"></i>
+                                                </a>
+                                            </li>
+                                            <li class="youtube">
+                                                <a href="https://www.youtube.com/" data-bs-toggle="tooltip"
+                                                    target="_blank" title="Youtube">
+                                                    <i class="fa fa-youtube"></i>
+                                                </a>
+                                            </li>
+                                            <li class="google-plus">
+                                                <a href="https://www.plus.google.com/discover" data-bs-toggle="tooltip"
+                                                    target="_blank" title="Google Plus">
+                                                    <i class="fa fa-google-plus"></i>
+                                                </a>
+                                            </li>
+                                            <li class="instagram">
+                                                <a href="https://www.instagram.com/" data-bs-toggle="tooltip"
+                                                    target="_blank" title="Instagram">
+                                                    <i class="fa fa-instagram"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fb's Quick View | Modal Area End Here -->
     </div>
-
-    <!-- Bootstrap core JavaScript-->
-
-    <!-- Core plugin JavaScript-->
-    <script src="~/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="~/assets/js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="~/assets/vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="~/assets/js/demo/chart-area-demo.js"></script>
-    <script src="~/assets/js/demo/chart-pie-demo.js"></script>
+    <!-- Body Wraper Area End Here -->
+    <!-- JS
+        ============================================ -->
+    <!-- jQuery JS -->
     <script src="~/assets/js/vendor/jquery-3.6.0.min.js"></script>
     <script src="~/assets/js/vendor/jquery-migrate-3.3.2.min.js"></script>
     <!-- Bootstrap JS -->
@@ -239,7 +705,9 @@
     <script src="~/assets/js/plugins.js"></script>
     <!-- Main JS -->
     <script src="~/assets/js/main.js"></script>
-
 </body>
+
+
+<!-- Mirrored from htmldemo.net/fastbuy/fastbuy// by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 27 Aug 2023 10:02:38 GMT -->
 
 </html>
