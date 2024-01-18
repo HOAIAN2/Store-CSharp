@@ -21,7 +21,7 @@ public class AuthController : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> Login(string username, string password, string redirect)
+    public async Task<IActionResult> Login(string username, string password, string? redirect)
     {
         var user = await dbContext.Users.FirstOrDefaultAsync(user => user.Username == username);
         if (user != null)
@@ -32,14 +32,14 @@ public class AuthController : BaseController
                  u.Name,
                  u.Id,
              }).FirstOrDefaultAsync(r => r.Id == user.RoleId);
-            Console.WriteLine(role.Name);
             var checkPassword = BC.Verify(password, user.Password);
             if (checkPassword)
             {
                 var jsonStr = JsonSerializer.Serialize(user);
                 HttpContext.Session.SetString("user", jsonStr);
                 HttpContext.Session.SetString("role", role.Name);
-                return Redirect(redirect);
+                if (redirect != null) return Redirect(redirect);
+                else return Redirect("/");
             }
             else ViewData["error"] = "Mật khẩu không chính xác";
         }
