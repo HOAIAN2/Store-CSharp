@@ -32,7 +32,6 @@ public class AuthController : BaseController
                  u.Name,
                  u.Id,
              }).FirstOrDefaultAsync(r => r.Id == user.RoleId);
-            Console.WriteLine(role.Name);
             var checkPassword = BC.Verify(password, user.Password);
             if (checkPassword)
             {

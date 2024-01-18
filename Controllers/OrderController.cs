@@ -196,7 +196,6 @@ public class OrderController : BaseController
                 catch (System.Exception)
                 {
                     return Redirect("/Order/Index");
-                    throw;
                 }
             }
             else
