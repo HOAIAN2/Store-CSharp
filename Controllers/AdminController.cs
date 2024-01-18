@@ -57,10 +57,33 @@ public class Admin : BaseController
         return Json(products);
     }
 
-    public async Task<ActionResult> Editproduct(string ProductName, int Price, int Quantity)
+    public async Task<ActionResult> Editproduct(int id, string ProductName, int Price, int Quantity)
     {
-        Console.WriteLine(ProductName);
-        return Json(ProductName);
+        var userJson = HttpContext.Session.GetString("user");
+        if (userJson == null) Redirect("/Auth/Login");
+        var user = JsonSerializer.Deserialize<User>(userJson);
+        if (user != null && user.RoleId == 1)
+        {
+            try
+            {
+                var product = await dbContext.Products.FirstOrDefaultAsync(p => p.Id == id);
+                if (product != null)
+                {
+                    product.ProductName = ProductName;
+                    product.Price = Price;
+                    product.Quantity = Quantity;
+                    dbContext.Products.Update(product);
+                    await dbContext.SaveChangesAsync();
+                    return Json(product);
+                }
+            }
+            catch (System.Exception)
+            {
+                return Json("fale");
+                throw;
+            }
+        }
+        return Redirect("/Auth/Login");
     }
 
     public async Task<IActionResult> Delete(int id, string redirect)
