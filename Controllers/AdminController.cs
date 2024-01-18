@@ -9,13 +9,24 @@ using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 
-using System.Threading.Tasks;
+using System.IO;
+using Microsoft.AspNetCore.Http;
+
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace Store.Controllers;
 
 public class Admin : BaseController
 {
+    private readonly IWebHostEnvironment _hostingEnvironment;
     private int perPage = 21;
+
+    public Admin(IWebHostEnvironment hostingEnvironment)
+    {
+        _hostingEnvironment = hostingEnvironment;
+    }
+
     [HttpGet]
     public ActionResult Index()
     {
@@ -32,7 +43,7 @@ public class Admin : BaseController
         int.TryParse(page, out pageNumber);
         if (pageNumber == 0) pageNumber = 1;
 
-        var queryProducts = dbContext.Products;
+        var queryProducts = dbContext.Products.OrderByDescending(p => p.Id);
 
         var total = queryProducts.Count();
         var from = (pageNumber - 1) * this.perPage + 1;
@@ -42,6 +53,9 @@ public class Admin : BaseController
         else products = await queryProducts.Take(this.perPage).ToListAsync();
 
         var categorys = await dbContext.Categories.ToListAsync();
+
+        string message = TempData["Message"] as string;
+        ViewData["test"] = message;
         ViewData["category"] = categorys;
         ViewData["products"] = products;
         ViewData["total"] = total;
@@ -61,13 +75,64 @@ public class Admin : BaseController
 
     private readonly IWebHostEnvironment _webHostEnvironment;
 
-    [HttpPost]
-    public async Task<IActionResult> CreateProduct(Product product)
+    public string GetWwwRootPath()
     {
-
-
-        return Json("sdfsf");
+        string wwwRootPath = _hostingEnvironment.WebRootPath;
+        return $"{wwwRootPath}\\assets\\images\\";
     }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateProduct(Product product, IFormFile files, string redirect)
+    {
+        if (files == null || product.CategoryId == null || product.Price == 0 || product.Quantity == 0)
+        {
+            TempData["Message"] = "fall";
+            return Redirect(redirect);
+        }
+
+
+        var userJson = HttpContext.Session.GetString("user");
+        if (userJson == null) Redirect("/Auth/Login");
+        var user = JsonSerializer.Deserialize<User>(userJson);
+        if (user != null && user.RoleId == 1)
+        {
+            string baseDirectory = $"{this.GetWwwRootPath()}product\\";
+            if (!Directory.Exists(baseDirectory))
+            {
+                Directory.CreateDirectory(baseDirectory);
+            }
+            string uniqueFileName = DateTime.Now.Ticks + "_" + files.FileName;
+            string filePath = Path.Combine(baseDirectory, uniqueFileName);
+            try
+            {
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await files.CopyToAsync(stream);
+                }
+                var NewProduct = new Product();
+                NewProduct.Images = uniqueFileName;
+                NewProduct.ProductName = product.ProductName;
+                NewProduct.Price = product.Price;
+                NewProduct.Quantity = product.Quantity;
+                dbContext.Products.Add(NewProduct);
+                await dbContext.SaveChangesAsync();
+            }
+            catch (System.Exception)
+            {
+                System.IO.File.Delete(filePath);
+                TempData["Message"] = "fall";
+                return Redirect("/Admin/Listproduct");
+            }
+        }
+        else
+        {
+            TempData["Message"] = "fall";
+            return Redirect("/Admin/Listproduct");
+        }
+        TempData["Message"] = "success";
+        return Redirect("/Admin/Listproduct");
+    }
+
 
 
     public async Task<ActionResult> ProductDetail(int id)
@@ -113,7 +178,6 @@ public class Admin : BaseController
 
     public async Task<IActionResult> Delete(int id, string redirect)
     {
-
         var userJson = HttpContext.Session.GetString("user");
         if (userJson == null) return Redirect("/Auth/Login");
         var user = JsonSerializer.Deserialize<User>(userJson);
@@ -138,6 +202,7 @@ public class Admin : BaseController
         {
             ViewData["error"] = $"có lỗi xãy ra";
         }
+        TempData["Message"] = "success";
         return Redirect(redirect);
     }
 

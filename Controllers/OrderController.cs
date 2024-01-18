@@ -33,7 +33,7 @@ public class OrderController : BaseController
                 }
                 var total = dbContext.OrderItems.Include(or => or.Product).Where(or => or.OrderId == order.Id).Sum(or => or.Price * or.Quantity);
                 ViewData["total"] = total;
-                ViewData["data"] = listproduct;
+                ViewData["data"] = listproduct.OrderByDescending(p => p.Order.OrderDate).ToList();
                 ViewData["type"] = "bought";
             }
             else
@@ -49,7 +49,7 @@ public class OrderController : BaseController
                     }
                 }
                 ViewData["type"] = "already_bought";
-                ViewData["data"] = listproduct;
+                ViewData["data"] = listproduct.OrderByDescending(p => p.Order.OrderDate).ToList();
             }
         }
         return View();

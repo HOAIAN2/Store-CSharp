@@ -502,7 +502,7 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
                     type: 'POST',
                     url: "/Order/addQuantity",
                     data: {
-                        id: 1,
+                        id: $(this)[0].parentElement.getAttribute('index'),
                         type: 'dec'
                     },
                 })
@@ -519,7 +519,7 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
                         type: 'POST',
                         url: "/Order/addQuantity",
                         data: {
-                            id: 1,
+                            id: $(this)[0].parentElement.getAttribute('index'),
                             type: 'inc'
                         },
                     })

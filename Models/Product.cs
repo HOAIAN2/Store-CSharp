@@ -15,21 +15,15 @@ namespace Store.Models
         }
 
         public int Id { get; set; }
-        [Required]
         public string ProductName { get; set; } = null!;
         public int? SupplierId { get; set; }
-        [Required]
         public int? CategoryId { get; set; }
         public int ViewCount { get; set; }
-        [Required]
         public int Price { get; set; }
-        [Required]
         public int Quantity { get; set; }
         public int SoldQuantity { get; set; }
         public decimal? Discount { get; set; }
-        [Required]
         public string? Images { get; set; }
-        [Required]
         public string? Description { get; set; }
 
         public virtual Category? Category { get; set; }
