@@ -8,7 +8,7 @@
     var from = ViewData["from"] as int?;
     var to = ViewData["to"] as int?;
     var nextUrl = ViewData["nextUrl"] as string;
-
+    var categorys = ViewData["category"] as List<Category>;
 }
 
 @* @{
@@ -174,7 +174,7 @@ if (error != null)
 
 <div class="page-section pt-60 pb-60 popup hidden">
     <div class="container">
-        <div class="row center_row">
+        <div class="row center_row" style="display: flex; align-items: center; justify-content: center">
             <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb-30">
                 <!-- Login Form s-->
                 <div>
@@ -209,8 +209,92 @@ if (error != null)
     </div>
 </div>
 
+<div class="page-section pt-60 pb-60 popup popup_create" style="display: none; overflow-y: scroll;">
+    <div class="container">
+        <div class="row center_row" style="display: flex; align-items: center; justify-content: center">
+            <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb-30">
+                <!-- Login Form s-->
+                <form action="/Admin/CreateProduct" method="post">
+                    <div class="login-form">
+                        <h4 class="login-title">Create</h4>
+                        <div class="row">
+                            <div class="col-md-12 col-12 mb-20">
+                                <label>Name*</label>
+                                <input name="ProductName" id="name-edit" class="mb-0" type="text"
+                                    placeholder="Name Product">
+                            </div>
+
+                            <select class="form-select" hidden name="SupplierId" aria-label="Default select example">
+                                <option selected>Select Supplier</option>
+                                <option value=1>one</option>
+                                <option value=2>two</option>
+                            </select>
+
+                            <select class="form-select" name="CategoryId" aria-label="Default select example">
+                                <option selected>Select Category</option>
+                                @{
+
+                                    if (categorys != null)
+                                    {
+                                        foreach (var item1 in categorys)
+                                        {
+                                            <option value=@item1.Id>@item1.CategoryName</option>
+                                        }
+                                    }
+                                }
+
+                            </select>
+
+                            <input name="ViewCount" hidden type="text" value="0">
+
+                            <div class="col-12 mb-20" style="display: flex; justify-content: space-between">
+                                <div style="width: 50%; padding-right: 5px">
+                                    <label>price</label>
+                                    <input name="Price" id="price-edit" class="mb-0" type="text" placeholder="Price">
+                                </div>
+                                <div style="width: 50%; padding-left: 5px">
+                                    <label>quantity</label>
+                                    <input name="Quantity" id="quantity-edit" class="mb-0" type="text"
+                                        placeholder="Quantity">
+                                </div>
+                            </div>
+                            <input name="SoldQuantity" type="text" hidden value="0">
+                            <input name="Discount" type="text" hidden value="0">
+                            @* <input name="Image" type="text" value="etst" hidden multiple> *@
+
+                            <div class="mb-3">
+                                <label for="formFileMultiple" class="form-label">Multiple files input example</label>
+                                <input name="Image" class="form-control" type="file" id="formFileMultiple" multiple>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+                                <textarea name="Description" class="form-control" id="exampleFormControlTextarea1"
+                                    rows="3"></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <button class="register-button mt-0 save">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
 
 <script>
+
+    document.querySelector(".create_product").addEventListener("click", (e) => {
+        document.querySelector(".popup_create").style.display = "block"
+    })
+    document.querySelector(".popup_create").addEventListener("click", (e) => {
+        if (e.target.className.includes("popup_create")) {
+            e.target.style.display = "none"
+        }
+    })
 
     document.querySelector("#wap_products").addEventListener('click', (e) => {
         if (e.target.className == "edit_product") {
