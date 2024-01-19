@@ -92,7 +92,7 @@ public class Admin : BaseController
 
 
         var userJson = HttpContext.Session.GetString("user");
-        if (userJson == null) Redirect("/Auth/Login");
+        if (userJson == null) return Redirect("/Auth/Login");
         var user = JsonSerializer.Deserialize<User>(userJson);
         if (user != null && user.RoleId == 1)
         {
@@ -114,6 +114,7 @@ public class Admin : BaseController
                 NewProduct.ProductName = product.ProductName;
                 NewProduct.Price = product.Price;
                 NewProduct.Quantity = product.Quantity;
+                NewProduct.Description = product.Description != null ? product.Description : "";
                 dbContext.Products.Add(NewProduct);
                 await dbContext.SaveChangesAsync();
             }
@@ -189,8 +190,10 @@ public class Admin : BaseController
 
                 if (product != null)
                 {
+
                     dbContext.Products.Remove(product);
                     await dbContext.SaveChangesAsync();
+
                 }
             }
             catch (System.Exception)

@@ -113,12 +113,14 @@ public class OrderController : BaseController
     {
         var userJson = HttpContext.Session.GetString("user");
         var user = JsonSerializer.Deserialize<User>(userJson);
+
         if (user != null)
         {
             try
             {
                 var order = await dbContext.Orders.FirstOrDefaultAsync(order => order.UserId == user.Id && !order.Paid);
                 var check_product = await dbContext.OrderItems.FirstOrDefaultAsync(or => or.ProductId == id);
+
                 if (check_product != null)
                 {
                     dbContext.OrderItems.Remove(check_product);
@@ -127,8 +129,8 @@ public class OrderController : BaseController
             }
             catch (System.Exception)
             {
+                Console.WriteLine(123);
                 return Redirect("/Order/Index");
-                throw;
             }
         }
         else
@@ -191,6 +193,19 @@ public class OrderController : BaseController
                         order.PaidMethodId = Paymentmethod == 1 || Paymentmethod == 2 ? Paymentmethod : 1;
                         dbContext.Orders.Update(order);
                         await dbContext.SaveChangesAsync();
+                        var orderitems = await dbContext.OrderItems.Where(o => o.OrderId == order.Id).ToListAsync();
+                        foreach (var item in orderitems)
+                        {
+                            var product = await dbContext.Products.FirstOrDefaultAsync(p => p.Id == item.ProductId);
+                            if (product != null)
+                            {
+                                product.Quantity = product.Quantity - item.Quantity;
+                                product.SoldQuantity += item.Quantity;
+                                dbContext.Products.Update(product);
+                                await dbContext.SaveChangesAsync();
+                            }
+                        }
+
                     }
                 }
                 catch (System.Exception)
